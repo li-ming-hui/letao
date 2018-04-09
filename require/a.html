@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script type="text/javascript" src="require.js"></script>
+</head>
+<body>
+<script type="text/javascript">
+requirejs.config({
+    baseUrl: './config/js',
+    paths:{
+        'a': 'module/a',
+        'b': 'module/b',
+        'jq': 'lib/jquery.1.11',
+        'c': 'module/c'
+    }
+})
+</script>
+</body>
+</html>

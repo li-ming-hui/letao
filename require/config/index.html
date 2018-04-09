@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script type="text/javascript" src="../require.js"></script>
+</head>
+<body>
+<div id="d">dddddd</div>
+<h1>h1h1h1h1h1</h1>
+<script type="text/javascript">
+//使用requirejs对象的config方法重新配置
+requirejs.config({
+    baseUrl: './js',
+    paths:{
+        //为模块 ./js/module/a 定义了别名 a
+        'a': 'module/a',
+        'b': 'module/b',
+        'c': 'module/c',
+        //将jquery转为模块载入方式
+        'jq': 'lib/jquery.1.11',
+        //将person载入
+        'per': 'tools/person'
+    },
+    //如果一个js文件，本身不支持模块化，但是又
+    //想用模块化的方式来使用，则需要配置shim
+    shim:{
+        //person.js中对象导出成什么
+        'per': {
+            // 导出的对象要和person.js中实例化出来的对象一样
+            exports: 'p',
+            deps: ['jq'] //指明该模块依赖的其他库文件
+        }
+    }
+})
+
+require(['a', 'b', 'per'], function(result1, result2, result3){
+    console.log(result1);
+    console.log(result2);
+    console.log(result3);
+    result3.name = 'aaa';
+    result3.age  = 20;
+    result3.sayHi();
+})
+</script>
+</body>
+</html>

@@ -1,0 +1,74 @@
+  <link rel="stylesheet" href="/assets/vendors/bootstrap/css/bootstrap.css">
+  <link rel="stylesheet" href="/assets/vendors/font-awesome/css/font-awesome.css">
+  <link rel="stylesheet" href="/assets/vendors/nprogress/nprogress.css">
+  <link rel="stylesheet" href="/assets/css/admin.css">
+  <script src="/assets/vendors/nprogress/nprogress.js"></script>
+  <script type="text/javascript" src="/assets/jquery.1.11.js"></script>
+
+<div class="col-md-4">
+<form id="mainForm">
+  <h2>添加新用户</h2>
+	<div class="form-group">
+	  <label for="email">邮箱</label>
+	  <input id="email" class="form-control" name="email" type="email" placeholder="邮箱">
+	</div>
+	<div class="form-group">
+	  <label for="nickname">昵称</label>
+	  <input id="nickname" class="form-control" name="nickname" type="text" placeholder="昵称">
+	</div>
+	<div class="form-group">
+	  <label for="password">密码</label>
+	  <input id="password" class="form-control" name="password" type="text" placeholder="密码">
+	</div>
+	<div class="form-group">
+	  <label for="age">年龄</label>
+	  <input id="age" class="form-control" name="age" type="text" placeholder="年龄">
+	</div>
+	<div class="form-group">
+	  <label for="gender">性别</label>
+	  <input id="gender" name="gender" type="radio" value="男">男
+	  <input id="gender" name="gender" type="radio" value="女">女
+	</div>
+	<div class="form-group">
+	  <label for="state">状态</label>
+	  <input id="state" name="state" type="radio" value="1">激活
+	  <input id="state" name="state" type="radio" value="2">未激活
+	</div>
+	<div class="form-group">
+	  <button class="btn btn-primary" type="button">添加</button>
+	</div>
+  </form>
+</div>
+<script type="text/javascript">
+//1. 获取添加按钮对象，绑定点击事件
+$('.btn-primary').on('click', function(){
+  //2. 获取表单对象 --- 将jquery对象转为dom对象
+  var fm = $('#mainForm')[0];
+  //3. 实例化FormData对象
+  var fd = new FormData(fm);
+
+  $.ajax({
+    url: 'addadmin_deal.php',
+    type: 'post', //使用FormData时，必须是post请求
+    data: fd,
+    dataType: 'text',
+    contentType: false, //使用FormData时，必须增加
+    processData: false, //这两个配置项，并且值为 false
+    success: function(msg){
+      console.log(msg);
+      if(msg == 1){
+        parent.layer.alert('添加新管理员成功');
+        //添加成功时，关闭弹出层
+        //获取当前弹出层的id
+        var index = parent.layer.getFrameIndex(window.name);
+        //根据id关闭弹出层
+        parent.layer.close(index);
+        //让父级页面(admin.php)自动刷新
+        parent.location.reload();
+      } else {
+        parent.layer.alert('添加新管理员失败');
+      }
+    }
+  });
+});
+</script>
